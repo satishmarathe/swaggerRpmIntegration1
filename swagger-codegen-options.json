@@ -1,0 +1,10 @@
+{
+	"basePackage":"com.pets",
+	"configPackage":"com.pets",
+	"modelPackage":"com.pets",
+	"apiPackage":"com.pets.api",
+	"invokerPackage":"com.pets.gen",
+	"groupId":"marathe.samples.swagger",
+	"artifactId":"swaggerEx1",
+	"artifactVersion":"1.0-SNAPSHOT"
+}
