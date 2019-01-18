@@ -3,31 +3,36 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>marathe.samples.swagger</groupId>
-	<artifactId>swaggerInheritanceEx1</artifactId>
+	<artifactId>swaggerRestEx1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Rest service using swagger spec  </name>
 	<description>This is an example of creating a rest service starting with a swagger spec yaml file</description>
 
-	
-	
+
 	<properties>
 		<java.version>1.8</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<swagger-core-version>1.5.15</swagger-core-version>
+		<jetty-version>9.2.9.v20150224</jetty-version>
 		<jersey2-version>2.22.2</jersey2-version>
 		<jackson-version>2.8.9</jackson-version>
 		<junit-version>4.12</junit-version>
 		<logback-version>1.1.7</logback-version>
 		<servlet-api-version>2.5</servlet-api-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<csh.resources>src/main/resources</csh.resources>
+		<mockito-version>2.8.47</mockito-version>
+		<powermock.version>1.7.3</powermock.version>
+		<jacoco-version>0.8.1</jacoco-version>
 	</properties>
+
 
 	<build>
 		<finalName>swaggerEx1</finalName>
 		<plugins>
-			
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -51,7 +56,7 @@
 	</build>
 
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-jersey2-jaxrs</artifactId>
@@ -89,17 +94,17 @@
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-multipart</artifactId>
-			<version>${jersey2-version}</version>			
+			<version>${jersey2-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-joda</artifactId>
-			<version>${jackson-version}</version>	
+			<version>${jackson-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
-			<version>${jackson-version}</version>	
+			<version>${jackson-version}</version>
 		</dependency>
 		<!-- Base64 encoding that works in both JVM and Android -->
 		<dependency>
@@ -113,25 +118,8 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.1.0.Final</version>			
+			<version>1.1.0.Final</version>
 		</dependency>
 	</dependencies>
 
-	<properties>
-		<java.version>1.8</java.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<swagger-core-version>1.5.15</swagger-core-version>
-		<jetty-version>9.2.9.v20150224</jetty-version>
-		<jersey2-version>2.22.2</jersey2-version>
-		<jackson-version>2.8.9</jackson-version>
-		<junit-version>4.12</junit-version>
-		<logback-version>1.1.7</logback-version>
-		<servlet-api-version>2.5</servlet-api-version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<csh.resources>src/main/resources</csh.resources>
-		<mockito-version>2.8.47</mockito-version>
-		<powermock.version>1.7.3</powermock.version>
-		<jacoco-version>0.8.1</jacoco-version>
-	</properties>
 </project>
