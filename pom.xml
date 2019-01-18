@@ -30,9 +30,83 @@
 
 
 	<build>
-		<finalName>swaggerEx1</finalName>
+		<finalName>swaggerRestEx1</finalName>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>${default.resources}</directory>
+			</resource>
+			<resource>
+				<directory>${csh.resources}</directory>
+			</resource>
+			<resource>
+				<directory>${default.config}</directory>
+			</resource>
+			<resource>
+				<directory>${env.config}</directory>
+			</resource>
+			<resource>
+				<directory>secrets/local</directory>
+			</resource>			
+		</resources>
 		<plugins>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.1.0</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!--  jetty plugin -->
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jetty-version}</version>
+				<configuration>
+					<webApp>
+						<contextPath>/</contextPath>						
+					</webApp>
+					<webAppSourceDirectory>target/${project.artifactId}-${project.version}</webAppSourceDirectory>
+					<stopPort>8089</stopPort>
+					<stopKey>stopit</stopKey>
+					<stopWait>10</stopWait>
+					<httpConnector>
+						<port>7070</port>
+						<idleTimeout>60000</idleTimeout>
+					</httpConnector>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-jetty</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<scanIntervalSeconds>0</scanIntervalSeconds>
+							<daemon>true</daemon>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-jetty</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -48,6 +122,53 @@
 							<sources>
 								<source>src/gen/java</source>
 							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- jacoco plugin  -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-version}</version>
+				<configuration>
+					<includes>au/com/westpac/inf/evnt/arrngmntorigevnt/consumr/wrkflwevntmaint/vi/api/impl/*</includes>
+					<includes>au/com/westpac/inf/evnt/arrngmntorigevnt/consumr/wrkflwevntmaint/vi/api/mapper/*</includes>
+					<includes>au/com/westpac/inf/evnt/arrngmntorigevnt/consumr/wrkflwevntmaint/vi/api/validation/*</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>check</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<!--  all classses must have 80% line and branch coverage. We use 2 d.p so that we can any check failure messages reported to 2 d.p -->
+								<rule>
+									<element>PACKAGE</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>0.80</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
 						</configuration>
 					</execution>
 				</executions>
@@ -82,9 +203,28 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito2</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>${servlet-api-version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
@@ -120,6 +260,26 @@
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.3</version>
+		</dependency>
+		
+		<!--  todo add soap client jar for work activity  -->
+		
+		<!--  todo add sts lite jar  -->
 	</dependencies>
+	
+	<repositories>
+		<repository>
+			<id>sonatype-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 </project>
