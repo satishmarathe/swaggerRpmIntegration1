@@ -78,11 +78,11 @@
 						<contextPath>/</contextPath>						
 					</webApp>
 					<webAppSourceDirectory>target/${project.artifactId}-${project.version}</webAppSourceDirectory>
-					<stopPort>8089</stopPort>
+					<stopPort>9089</stopPort>
 					<stopKey>stopit</stopKey>
 					<stopWait>10</stopWait>
 					<httpConnector>
-						<port>7070</port>
+						<port>9070</port>
 						<idleTimeout>60000</idleTimeout>
 					</httpConnector>
 				</configuration>
@@ -135,6 +135,7 @@
 					<includes>au/com/westpac/inf/evnt/arrngmntorigevnt/consumr/wrkflwevntmaint/vi/api/impl/*</includes>
 					<includes>au/com/westpac/inf/evnt/arrngmntorigevnt/consumr/wrkflwevntmaint/vi/api/mapper/*</includes>
 					<includes>au/com/westpac/inf/evnt/arrngmntorigevnt/consumr/wrkflwevntmaint/vi/api/validation/*</includes>
+					<includes>com/pets/vi/api/util/*</includes>
 				</configuration>
 				<executions>
 					<execution>

@@ -3,9 +3,7 @@ info:
   description: "This is a sample rest service"
   version: "1.0.0"
   title: "My first Service"
-  
-host: "localhost"
-basePath: "/v2"
+
 tags:
 - name: "pet"
   description: "Everything about your Pets"
@@ -13,191 +11,335 @@ tags:
     description: "Find out more"
     url: "http://someURL"
 
+#######################################################################################
+#                      Host , Basepath , Schemes , Content Types                                                     #
+#######################################################################################
+host: "localhost"
+
+basePath: "/v1"
+
 schemes:
 - "https"
 - "http"
 
+produces:
+    - application/json
+
+consumes:
+    - application/json
+
+#######################################################################################
+#                      Security                                                       #
+#######################################################################################
+securityDefinitions:
+    API Key:
+        type: basic
+        description: consumer should present api key and secret as part of standard http authorization header 
+        
+security:
+    - API Key: []
+
 #######################################################################################
 #                      Parameters                                                     #
 #######################################################################################
-
-    
-
-    
+parameters:
+    x-messageId:
+        name: x-messageId
+        in: header
+        description: Unique message identifier
+        type: string
+        required: true
+    x-appCorelationId:
+        name: x-appCorelationId
+        in: header
+        description: Used to trace a request
+        type: string
+        required: true
+    x-organizationId:
+        name: x-organizationId
+        in: header
+        description: consumers organization
+        type: string
+        required: true    
+        enum:
+            - ABC
+            - XYZ
+    x-originatingSystemId:
+        name: x-originatingSystemId
+        in: header
+        description: System Id of application
+        type: string
+        required: true
+    x-consumerType:
+        name: x-consumerType
+        in: header
+        description: something
+        type: string
+        required: true
+        enum:
+            - Everyone
+            - Other
+    x-userId:
+        name: x-userId
+        in: header
+        description: user invoking API
+        type: string
+        required: false
+    x-userIdScheme:
+        name: x-userIdScheme
+        in: header
+        description: user scheme invoking API
+        type: string
+        required: false
+        enum:
+            - EmpId
+            - CustomerId
+    x-authorization:
+        name: x-authorization
+        in: header
+        description: user auth
+        type: string
+        required: false        
+    x-originatingBSB:
+        name: x-originatingBSB
+        in: header
+        description: BSB
+        type: string
+        required: false
+    x-originatingDeviceId:
+        name: x-originatingDeviceId
+        in: header
+        description: originatingDeviceId
+        type: string
+        required: false    
+    brandSilo:
+        name: brandSilo
+        in: query
+        description: channel identification
+        type: string
+        required: true
+        enum:
+            - POODLE
+            - MANGY
+    applicationId:
+        name: applicationId
+        in: query
+        description: Unique application identifier
+        type: string
+        required: true    
 #######################################################################################
 #                      PATHS                                                          #
 #######################################################################################
 paths:
-  /pet/pets:
-    get:
+  /submission/{submissionId}/workActivityTasks:
+    post:
       tags:
-      - "pet"
-      summary: "Gets All Pets"
-      description: "Gets all the pets"
-      operationId: "findPetsByStatus"
-      produces:
-      - "application/json"
-      
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Pet"
-        400:
-          description: "Invalid status value"
-          
-  /pet/{petId}/collaterals:
-    get:
-      tags:
-      - "getCollateralPets"
-      summary: "Gets specific Collateral Pet"
-      description: "Gets specific Collateral pet"
-      operationId: "getCollateralPets"
+      - "Create Work Activity"
+      summary: "Create Work Activity"
+      description: "Create Work Activity"
+      operationId: "createWorkActivity"
       parameters:
-        - name: petId
-          in: path
-          description: identifies the unique pet 
-          type: string
-          required: true
-      produces:
-      - "application/json"
+       - $ref: '#/parameters/x-messageId'
+       - $ref: '#/parameters/x-appCorelationId'
+       - $ref: '#/parameters/x-organizationId'
+       - $ref: '#/parameters/x-originatingSystemId'
+       - $ref: '#/parameters/x-consumerType'
+       - $ref: '#/parameters/x-authorization'
+       - $ref: '#/parameters/brandSilo'
+       - $ref: '#/parameters/applicationId'
+       - name: submissionId
+         in: path
+         description: SubmissionId associated with work activity
+         type: string
+         required: true
+       - in: "body"
+         name: "WorkActivityRequest"
+         description: "Request object that contains payload"
+         required: true 
+         schema:
+           $ref: "#/definitions/WorkActivityRequest"
       
       responses:
-        200:          
-             $ref: "#/responses/200GetCollateralPetsResponse"
+        204:
+          $ref: "#/responses/204CreateWorkActivitySuccessResponse"
+        
         400:
-          description: "Invalid status value" 
-          
-  /pet/allPetcollaterals:
+          $ref: "#/responses/400ErrorResponse"
+        404:
+          $ref: "#/responses/404ErrorResponse"
+        500:
+          $ref: "#/responses/500ErrorResponse"
+   
+  /healthcheck:
     get:
-      tags:
-      - "getAllPetcollaterals"
-      summary: "Gets All Collateral Pets"
-      description: "Gets all the Collateral pets"
-      operationId: "getAllPetcollaterals"      
-      produces:
-      - "application/json"
-      
-      responses:
-        200:          
-             $ref: "#/responses/200GetAllCollateralPetsResponse"
-        400:
-          description: "Invalid status value" 
-      
-  
-  
+        tags:
+            - HealthCheck
+        description: heartbeat check of api health
+        operationId: getHealthCheckStatus
+        responses:
+            200:
+                $ref: '#/responses/200HealthCheckResponse'
 #######################################################################################
-#                      Parameters                                                     #
+#                      Responses                                                      #
 #######################################################################################
 responses:
-    200GetCollateralPetsResponse:
+    204CreateWorkActivitySuccessResponse:
         description: OK DOK 
-        schema: 
-            properties:
-                data:
-                    type: object 
-                    properties: 
-                        collaterals:
-                            type: array
-                            items:
-                                $ref: '#/definitions/CollateralParent'
                                 
-    200GetAllCollateralPetsResponse:
-        description: OK DOK 
-        schema: 
+    400ErrorResponse:
+        description: |
+            _Bad Request_
+            
+            Possible errors
+            
+            | Error Code | Error Message | Error Description |
+            | ---------- | ------------- | ----------------- |
+            | 8001       | Invalid input | Parameter missing {0} |
+            
+        schema:
+            type: object
             properties:
-                data:
-                    type: object 
-                    properties: 
-                        collaterals:
-                            type: array
-                            items:
-                                $ref: '#/definitions/CollateralChild'
-                                
+                result:
+                    type: object
+                    properties:
+                           errors:
+                               type: array
+                               items:
+                                   $ref: '#/definitions/Error'
+                                   
+            example:
+                result:
+                    errors:
+                        - code: 1600
+                          message: 'Required Header params are missing'
+                          details: 'Missing required header param - x-messageId'
+    
+    404ErrorResponse:
+        description: |
+            _Resource NOT Found_
+            
+            Possible errors
+            
+            | Error Code | Error Message | Error Description |
+            | ---------- | ------------- | ----------------- |
+            | 8005       | Submission not found | SubmissionId not found in provider system |
+            
+        schema:
+            type: object
+            properties:
+                result:
+                    type: object
+                    properties:
+                           errors:
+                               type: array
+                               items:
+                                   $ref: '#/definitions/Error'
+                                   
+            example:
+                result:
+                    errors:
+                        - code: 8005
+                          message: 'Submission not found'
+                          details: 'SubmissionId not found'
+                          
+    500ErrorResponse:
+        description: |
+            _Internal Server Error_
+            
+            Possible errors
+            
+            | Error Code | Error Message | Error Description |
+            | ---------- | ------------- | ----------------- |
+            | 10001       | ISE | Unknown error |
+            | 10002       | ISE | Unknown error {0} |
+            | 10300       | ISE | Unknown error |
+            | 10301       | ISE | Unknown error |
+            | 10302       | ISE | Unknown error |
+            
+        schema:
+            type: object
+            properties:
+                result:
+                    type: object
+                    properties:
+                           errors:
+                               type: array
+                               items:
+                                   $ref: '#/definitions/Error'
+                                   
+            example:
+                result:
+                    errors:
+                        - code: 10001
+                          message: 'Internal Server Error'
+                          details: 'Unkknown internal Technical error'
+    
+    200HealthCheckResponse:
+        description: Healthcheck status 
+        schema:
+            $ref: '#/definitions/HealthcheckStatus'
 #######################################################################################
 #                      Model Definitions                                                     #
 #######################################################################################
 
 definitions:
-
-    CollateralParent:
-        discriminator: collateralId
-        required:
-            - collateralId
+    
+    HealthcheckStatus:
+        description: healthcheck status
+        properties:
+            status:
+                type: string
+                enum:
+                    - success
+    WorkActivityRequest:
         description: This is an important object  
         type: object
         properties:
-            collateralId:
-                description: some description for this field 
-                type: string 
-            propertyAddress:
-                $ref: "#/definitions/PhysicalAddress"
-            facilities:
-                type: array
-                items:
-                    $ref: "#/definitions/Facilities"
-    
-    CollateralChild:
-        description: This is a child object of CollateralParent object
-        
-        allOf:
-            - $ref: '#/definitions/CollateralParent' # CollateralChild has all properties of CollateralParent
-            - type: object
-              properties:
-                    applicationIdList:
-                        type: array
-                        items:
-                            type: string 
-    
-    Facilities:
-        description: Details of Facilities provided for the pet 
-        type: object
-        properties:
-            facilityType:
-                description: The type of facility 
-                type: string 
-                enum:
-                    - KENNEL
-                    - DOWN BLANKET 
-            isFacilityLongTerm:
-                description: provides details of the length of tenure that a pet can stay in 
+            isCompletionNotificationRequired:
+                description: do we want to be notified 
                 type: boolean
-            validityExpiryDateTime:
+            isAdhocTask:
+                description: run time activity 
+                type: boolean
+            taskType:
+                description: type of task
+                type: string
+                enum:
+                    - TASK
+            taskStage:
+                description: at what stage the task exists 
+                type: string
+            priority:
+                description: task priority 
+                type: string
+                enum:
+                    - HIGH
+                    - MEDIUM
+                    - LOW
+            ownerCategory:
+                description: owner of task
+                type: string
+            taskSummary:
                 type: string 
-                format: YYYY-MM-DDTHH:MI:SSZ
-                
-    PhysicalAddress:
-        description: Address of pet residence 
-        type: object 
-        properties:
-            city:
-                description: resident city of pet 
-                type: string 
-            country:
-                description: resident country of pet 
-                type: string 
-  
-    Pet:
-        type: "object"
+                description: subject line 
+            taskDescription:
+                type: string
+                description: details of task 
+    
+    Error:
+        description: This is an important object  
+        type: object
         required:
-        - "name"
+            - code
+            - message
         properties:
-          id:
-            type: "integer"
-            format: "int64"
-          
-          name:
-            type: "string"
-            example: "doggie"
-          status:
-            type: "string"
-            description: "pet status in the store"
-            enum:
-            - "available"
-            - "pending"
-            - "sold"
-        xml:
-          name: "Pet"
-  
+            code:
+                description: Error code
+                type: integer
+                format: int32
+            message:
+                description: Error message 
+                type: string            
+            details:
+                description: Detailed information about the error 
+                type: string
