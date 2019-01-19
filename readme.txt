@@ -10,3 +10,11 @@ mvn surefire:test
 if you want to run just one test
 mvn -Dtest=NameOfTest surefire:test
 ------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------
+Changes from original :
+
+#1
+was : \src\test\java\au\com\westpac\inf\bnkng\evnt\arrngmntorigevnt\consumr\wrkflwevntmaint\vi\api\utiltest\
+is  : \src\test\java\com\pets\vi\api\utiltest\
