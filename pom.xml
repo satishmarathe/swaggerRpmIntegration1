@@ -134,8 +134,7 @@
 				<configuration>
 					<includes>au/com/westpac/inf/evnt/arrngmntorigevnt/consumr/wrkflwevntmaint/vi/api/impl/*</includes>
 					<includes>au/com/westpac/inf/evnt/arrngmntorigevnt/consumr/wrkflwevntmaint/vi/api/mapper/*</includes>
-					<includes>au/com/westpac/inf/evnt/arrngmntorigevnt/consumr/wrkflwevntmaint/vi/api/validation/*</includes>
-					<includes>com/pets/vi/api/util/*</includes>
+					<includes>au/com/westpac/inf/evnt/arrngmntorigevnt/consumr/wrkflwevntmaint/vi/api/validation/*</includes>					
 				</configuration>
 				<executions>
 					<execution>
@@ -253,6 +252,8 @@
 			<artifactId>migbase64</artifactId>
 			<version>2.2</version>
 		</dependency>
+		
+	
 
 
 		<!-- Bean Validation API support -->

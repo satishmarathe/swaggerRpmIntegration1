@@ -16,7 +16,7 @@ tags:
 #######################################################################################
 host: "localhost"
 
-basePath: "/v1"
+basePath: "/inf/bnkng/evnt/arrnfmntorigevnt/consumr/wrkflwevntmaint/v1"
 
 schemes:
 - "https"

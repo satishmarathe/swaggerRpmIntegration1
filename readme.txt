@@ -10,6 +10,11 @@ mvn surefire:test
 if you want to run just one test
 mvn -Dtest=NameOfTest surefire:test
 ------------------------------------------------------------------------------------------------------------
+#4
+To generate code from swagger yaml file:
+Use the command:
+java -jar swagger-codegen-cli-2.2.1.jar generate -c swagger-codegen-options.json -l jaxrs -i swagger.yml
+
 
 
 ------------------------------------------------------------------------------------------------------------

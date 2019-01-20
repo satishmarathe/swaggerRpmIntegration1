@@ -1,10 +1,10 @@
 {
-	"basePackage":"com.pets",
-	"configPackage":"com.pets",
-	"modelPackage":"com.pets",
-	"apiPackage":"com.pets.api",
-	"invokerPackage":"com.pets.gen",
+	"basePackage":"au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v1",
+	"configPackage":"au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v1",
+	"modelPackage":"au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v1",
+	"apiPackage":"au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v1.api",
+	"invokerPackage":"au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v1.gen",
 	"groupId":"marathe.samples.swagger",
-	"artifactId":"swaggerEx1",
+	"artifactId":"swaggerRestEx1",
 	"artifactVersion":"1.0-SNAPSHOT"
 }
