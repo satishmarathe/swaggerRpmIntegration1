@@ -27,6 +27,7 @@ public class PromotionApiServiceImpl extends PromotionApiService {
     	final String METHOD_NAME = "createWorkActivity";
     	final long START_TIME = System.currentTimeMillis();
     	
+    	System.out.println(" what have we received " + simplePromotionRequest);
     	//LoggerService.logInfo(CLASS_NAME, METHOD_NAME, corelationId, message, args);
         //return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     	if(applicationId.trim().equalsIgnoreCase("404")) {

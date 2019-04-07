@@ -229,7 +229,7 @@ definitions:
         type: object
         properties:
             promoId:
-                description: type of task
+                description: id of promo
                 type: string
             promoDescription:
                 type: string
