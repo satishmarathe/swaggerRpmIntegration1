@@ -1,14 +1,15 @@
 swagger: "2.0"
 info:
-  description: "This is a sample rest service"
+  title: "Promotion Management Services"
+  description: "Promotion management services for Simple and Buy Get promotions"
   version: "1.0.0"
-  title: "My first Service"
+  
 
 tags:
-- name: "pet"
-  description: "Everything about your Pets"
+- name: ""
+  description: ""
   externalDocs:
-    description: "Find out more"
+    description: ""
     url: "http://someURL"
 
 #######################################################################################
@@ -158,6 +159,40 @@ paths:
          required: true 
          schema:
            $ref: "#/definitions/WorkActivityRequest"
+      
+      responses:
+        204:
+          $ref: "#/responses/204CreateWorkActivitySuccessResponse"
+        
+        400:
+          $ref: "#/responses/400ErrorResponse"
+        404:
+          $ref: "#/responses/404ErrorResponse"
+        500:
+          $ref: "#/responses/500ErrorResponse"
+  
+  /promotion/createSimple:
+    post:
+      tags:
+      - "Create Simple Promotion"
+      summary: "Create Simple Promo"
+      description: "Create Simple Promo"
+      operationId: "createSimplePromo"
+      parameters:
+       - $ref: '#/parameters/x-messageId'
+       - $ref: '#/parameters/x-appCorelationId'
+       - $ref: '#/parameters/x-organizationId'
+       - $ref: '#/parameters/x-originatingSystemId'
+       - $ref: '#/parameters/x-consumerType'
+       - $ref: '#/parameters/x-authorization'
+       - $ref: '#/parameters/brandSilo'
+       - $ref: '#/parameters/applicationId'
+       - in: "body"
+         name: "SimplePromotionRequest"
+         description: "Request object that contains SimplePromo payload"
+         required: true 
+         schema:
+           $ref: "#/definitions/SimplePromoRequest"
       
       responses:
         204:
@@ -326,6 +361,41 @@ definitions:
                 type: string
                 description: details of task 
     
+    SimplePromoRequest:
+        description: Simple Promotion payload  
+        type: object
+        properties:
+            isCompletionNotificationRequired:
+                description: do we want to be notified 
+                type: boolean
+            isAdhocTask:
+                description: run time activity 
+                type: boolean
+            taskType:
+                description: type of task
+                type: string
+                enum:
+                    - TASK
+            taskStage:
+                description: at what stage the task exists 
+                type: string
+            priority:
+                description: task priority 
+                type: string
+                enum:
+                    - HIGH
+                    - MEDIUM
+                    - LOW
+            ownerCategory:
+                description: owner of task
+                type: string
+            taskSummary:
+                type: string 
+                description: subject line 
+            taskDescription:
+                type: string
+                description: details of task 
+                
     Error:
         description: This is an important object  
         type: object
