@@ -11,7 +11,7 @@
             <param-value>
                 io.swagger.jaxrs.listing,
                 io.swagger.sample.resource,
-                au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v1.api
+                au.com.coles.promo.v1.api
             </param-value>
         </init-param>
         <init-param>
@@ -38,23 +38,23 @@
         </init-param>
         <init-param>
             <param-name>swagger.api.basepath</param-name>
-            <param-value>https://localhost/inf/bnkng/evnt/arrnfmntorigevnt/consumr/wrkflwevntmaint/v1</param-value>
+            <param-value>https://localhost/promoServices/v1</param-value>
         </init-param>
 
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet>
         <servlet-name>Bootstrap</servlet-name>
-        <servlet-class>au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v1.api.Bootstrap</servlet-class>
+        <servlet-class>au.com.coles.promo.v1.api.Bootstrap</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>jersey</servlet-name>
-        <url-pattern>/inf/bnkng/evnt/arrnfmntorigevnt/consumr/wrkflwevntmaint/v1/*</url-pattern>
+        <url-pattern>/promoServices/v1/*</url-pattern>
     </servlet-mapping>
     <filter>
         <filter-name>ApiOriginFilter</filter-name>
-        <filter-class>au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v1.api.ApiOriginFilter</filter-class>
+        <filter-class>au.com.coles.promo.v1.api.ApiOriginFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ApiOriginFilter</filter-name>

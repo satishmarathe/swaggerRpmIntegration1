@@ -16,10 +16,10 @@ To generate code from swagger yaml file:
 Use the command:
 java -jar swagger-codegen-cli-2.2.1.jar generate -c swagger-codegen-options.json -l jaxrs -i swagger.yml
 
-
+------------------------------------------------------------------------------------------------------------
 #5
 To test the rest api :
-http://localhost:9070/inf/bnkng/evnt/arrnfmntorigevnt/consumr/wrkflwevntmaint/v1/submission/SUB1234/workActivityTasks?{{brandSilo}}={{brandSilo}}&applicationId=123
+http://localhost:9070/promoServices/v1/promotion/createSimple?{{brandSilo}}={{brandSilo}}&applicationId=123
 
 ------------------------------------------------------------------------------------------------------------
 Changes from original :

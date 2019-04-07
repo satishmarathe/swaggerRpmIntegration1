@@ -17,7 +17,7 @@ tags:
 #######################################################################################
 host: "localhost"
 
-basePath: "/inf/bnkng/evnt/arrnfmntorigevnt/consumr/wrkflwevntmaint/v1"
+basePath: "/promoServices/v1"
 
 schemes:
 - "https"
@@ -44,84 +44,24 @@ security:
 #                      Parameters                                                     #
 #######################################################################################
 parameters:
-    x-messageId:
-        name: x-messageId
-        in: header
-        description: Unique message identifier
-        type: string
-        required: true
     x-appCorelationId:
         name: x-appCorelationId
         in: header
         description: Used to trace a request
         type: string
         required: true
-    x-organizationId:
-        name: x-organizationId
-        in: header
-        description: consumers organization
-        type: string
-        required: true    
-        enum:
-            - ABC
-            - XYZ
-    x-originatingSystemId:
-        name: x-originatingSystemId
-        in: header
-        description: System Id of application
-        type: string
-        required: true
-    x-consumerType:
-        name: x-consumerType
-        in: header
-        description: something
-        type: string
-        required: true
-        enum:
-            - Everyone
-            - Other
     x-userId:
         name: x-userId
         in: header
         description: user invoking API
         type: string
         required: false
-    x-userIdScheme:
-        name: x-userIdScheme
-        in: header
-        description: user scheme invoking API
-        type: string
-        required: false
-        enum:
-            - EmpId
-            - CustomerId
     x-authorization:
         name: x-authorization
         in: header
         description: user auth
         type: string
         required: false        
-    x-originatingBSB:
-        name: x-originatingBSB
-        in: header
-        description: BSB
-        type: string
-        required: false
-    x-originatingDeviceId:
-        name: x-originatingDeviceId
-        in: header
-        description: originatingDeviceId
-        type: string
-        required: false    
-    brandSilo:
-        name: brandSilo
-        in: query
-        description: channel identification
-        type: string
-        required: true
-        enum:
-            - POODLE
-            - MANGY
     applicationId:
         name: applicationId
         in: query
@@ -132,44 +72,6 @@ parameters:
 #                      PATHS                                                          #
 #######################################################################################
 paths:
-  /submission/{submissionId}/workActivityTasks:
-    post:
-      tags:
-      - "Create Work Activity"
-      summary: "Create Work Activity"
-      description: "Create Work Activity"
-      operationId: "createWorkActivity"
-      parameters:
-       - $ref: '#/parameters/x-messageId'
-       - $ref: '#/parameters/x-appCorelationId'
-       - $ref: '#/parameters/x-organizationId'
-       - $ref: '#/parameters/x-originatingSystemId'
-       - $ref: '#/parameters/x-consumerType'
-       - $ref: '#/parameters/x-authorization'
-       - $ref: '#/parameters/brandSilo'
-       - $ref: '#/parameters/applicationId'
-       - name: submissionId
-         in: path
-         description: SubmissionId associated with work activity
-         type: string
-         required: true
-       - in: "body"
-         name: "WorkActivityRequest"
-         description: "Request object that contains payload"
-         required: true 
-         schema:
-           $ref: "#/definitions/WorkActivityRequest"
-      
-      responses:
-        204:
-          $ref: "#/responses/204CreateWorkActivitySuccessResponse"
-        
-        400:
-          $ref: "#/responses/400ErrorResponse"
-        404:
-          $ref: "#/responses/404ErrorResponse"
-        500:
-          $ref: "#/responses/500ErrorResponse"
   
   /promotion/createSimple:
     post:
@@ -179,13 +81,8 @@ paths:
       description: "Create Simple Promo"
       operationId: "createSimplePromo"
       parameters:
-       - $ref: '#/parameters/x-messageId'
        - $ref: '#/parameters/x-appCorelationId'
-       - $ref: '#/parameters/x-organizationId'
-       - $ref: '#/parameters/x-originatingSystemId'
-       - $ref: '#/parameters/x-consumerType'
        - $ref: '#/parameters/x-authorization'
-       - $ref: '#/parameters/brandSilo'
        - $ref: '#/parameters/applicationId'
        - in: "body"
          name: "SimplePromotionRequest"
@@ -196,7 +93,7 @@ paths:
       
       responses:
         204:
-          $ref: "#/responses/204CreateWorkActivitySuccessResponse"
+          $ref: "#/responses/204CreateSimplePromoSuccessResponse"
         
         400:
           $ref: "#/responses/400ErrorResponse"
@@ -218,8 +115,8 @@ paths:
 #                      Responses                                                      #
 #######################################################################################
 responses:
-    204CreateWorkActivitySuccessResponse:
-        description: OK DOK 
+    204CreateSimplePromoSuccessResponse:
+        description: OK  
                                 
     400ErrorResponse:
         description: |
@@ -326,75 +223,26 @@ definitions:
                 type: string
                 enum:
                     - success
-    WorkActivityRequest:
-        description: This is an important object  
-        type: object
-        properties:
-            isCompletionNotificationRequired:
-                description: do we want to be notified 
-                type: boolean
-            isAdhocTask:
-                description: run time activity 
-                type: boolean
-            taskType:
-                description: type of task
-                type: string
-                enum:
-                    - TASK
-            taskStage:
-                description: at what stage the task exists 
-                type: string
-            priority:
-                description: task priority 
-                type: string
-                enum:
-                    - HIGH
-                    - MEDIUM
-                    - LOW
-            ownerCategory:
-                description: owner of task
-                type: string
-            taskSummary:
-                type: string 
-                description: subject line 
-            taskDescription:
-                type: string
-                description: details of task 
-    
+                    
     SimplePromoRequest:
         description: Simple Promotion payload  
         type: object
         properties:
-            isCompletionNotificationRequired:
-                description: do we want to be notified 
-                type: boolean
-            isAdhocTask:
-                description: run time activity 
-                type: boolean
-            taskType:
+            promoId:
                 description: type of task
                 type: string
-                enum:
-                    - TASK
-            taskStage:
-                description: at what stage the task exists 
+            promoDescription:
                 type: string
-            priority:
-                description: task priority 
+                description: Promotion Details
+            promoType:
+                description: Type of Promotion 
                 type: string
                 enum:
-                    - HIGH
-                    - MEDIUM
-                    - LOW
-            ownerCategory:
-                description: owner of task
-                type: string
-            taskSummary:
-                type: string 
-                description: subject line 
-            taskDescription:
-                type: string
-                description: details of task 
+                    - SIMPLE
+                    - BUYGET
+                    - THRESHOLD
+             
+             
                 
     Error:
         description: This is an important object  
