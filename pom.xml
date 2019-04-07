@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>marathe.samples.swagger</groupId>
-	<artifactId>swaggerRestEx1</artifactId>
+	<artifactId>swaggerRpmEx1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Rest service using swagger spec  </name>
@@ -30,7 +30,7 @@
 
 
 	<build>
-		<finalName>swaggerRestEx1</finalName>
+		<finalName>swaggerRpmEx1</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<resources>

@@ -3,7 +3,7 @@ package au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v
 import au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v1.*;
 import au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v1.api.SubmissionApiService;
 import au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v1.api.factories.SubmissionApiServiceFactory;
-
+import au.com.westpac.inf.bnkng.evnt.arrngmntorigevnt.consumr.wrkflwevntmaint.v1.api.tasty.AppException;
 import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
 
@@ -57,7 +57,7 @@ public class SubmissionApi  {
 ,@ApiParam(value = "Request object that contains payload" ,required=true) WorkActivityRequest workActivityRequest
 ,@ApiParam(value = "user auth" )@HeaderParam("x-authorization") String xAuthorization
 ,@Context SecurityContext securityContext)
-    throws NotFoundException {
+    throws AppException,NotFoundException {
         return delegate.createWorkActivity(xMessageId,xAppCorelationId,xOrganizationId,xOriginatingSystemId,xConsumerType,brandSilo,applicationId,submissionId,workActivityRequest,xAuthorization,securityContext);
     }
 }
